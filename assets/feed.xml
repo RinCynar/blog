@@ -7,25 +7,25 @@ permalink: /feed.xml
 {% capture source %}
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>{{ "/" | absolute_url }}</id>
-  <title>{{ site.title }}</title>
-  <subtitle>{{ site.description }}</subtitle>
+  <title>{{ site.title | xml_escape }}</title>
+  <subtitle>{{ site.description | xml_escape }}</subtitle>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
   <author>
-    <name>{{ site.social.name }}</name>
+    <name>{{ site.social.name | xml_escape }}</name>
     <uri>{{ "/" | absolute_url }}</uri>
   </author>
   <link rel="self" type="application/atom+xml" href="{{ page.url | absolute_url }}"/>
   <link rel="alternate" type="text/html" hreflang="{{ site.alt_lang | default: site.lang }}"
     href="{{ '/' | absolute_url }}"/>
   <generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator>
-  <rights> © {{ 'now' | date: '%Y' }} {{ site.social.name }} </rights>
+  <rights> © {{ 'now' | date: '%Y' }} {{ site.social.name | xml_escape }} </rights>
   <icon>{{ site.baseurl }}/assets/img/favicons/favicon.ico</icon>
   <logo>{{ site.baseurl }}/assets/img/favicons/favicon.png</logo>
 
 {% for post in site.posts limit:10 %}
   {% assign post_absolute_url = post.url | absolute_url %}
   <entry>
-    <title>{{ post.title }}</title>
+    <title>{{ post.title | xml_escape }}</title>
     <link href="{{ post_absolute_url }}" rel="alternate" type="text/html" title="{{ post.title | xml_escape }}" />
     <published>{{ post.date | date_to_xmlschema }}</published>
   {% if post.last_modified_at %}
@@ -34,14 +34,14 @@ permalink: /feed.xml
     <updated>{{ post.date | date_to_xmlschema }}</updated>
   {% endif %}
     <id>{{ post_absolute_url }}</id>
-    <content type="html">{{ post.content }}</content>
+    <content type="html">{{ post.content | xml_escape }}</content>
     <author>
-      <name>{{ post.author | default: site.social.name }}</name>
+      <name>{{ post.author | default: site.social.name | xml_escape }}</name>
     </author>
 
   {% if post.categories %}
     {% for category in post.categories %}
-    <category term="{{ category }}" />
+    <category term="{{ category | xml_escape }}" />
     {% endfor %}
   {% endif %}
 
@@ -51,4 +51,4 @@ permalink: /feed.xml
 {% endfor %}
 </feed>
 {% endcapture %}
-{{ source | replace: '&', '&amp;' }}
+{{ source }}
