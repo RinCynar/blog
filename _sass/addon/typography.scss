@@ -1,0 +1,70 @@
+/*
+ * Material 3 type scale applied to Chirpy heading / body markup.
+ */
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--md-font-body);
+  font-size: var(--md-fs-body);
+  line-height: var(--md-lh-body);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--md-font-display);
+  font-weight: 500;
+  color: var(--md-on-surface);
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-size: var(--md-fs-display);
+  line-height: var(--md-lh-display);
+  letter-spacing: var(--md-ls-display);
+}
+
+h2 {
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+
+h3 {
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: 1.125rem;
+  line-height: 1.35;
+}
+
+h5 {
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--md-font-mono);
+}
+
+:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}

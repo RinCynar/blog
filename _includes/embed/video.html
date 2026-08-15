@@ -33,7 +33,7 @@
 {% endif %}
 
 <p>
-  <video class="embed-video file" {{ poster }} {{ attributes }}>
+  <video class="embed-video file media-surface" {{ poster }} {{ attributes }}>
     {% assign extension = video_url | split: '.' | last %}
     {% assign types = extension | concat: types %}
 

@@ -1,7 +1,5 @@
 /**
- * Set up image popup
- *
- * Dependencies: https://github.com/biati-digital/glightbox
+ * Material-style image viewer via GLightbox.
  */
 
 const IMG_CLASS = 'popup';
@@ -11,5 +9,13 @@ export function imgPopup() {
     return;
   }
 
-  GLightbox({ selector: `.${IMG_CLASS}` });
+  GLightbox({
+    selector: `.${IMG_CLASS}`,
+    touchNavigation: true,
+    loop: false,
+    closeOnOutsideClick: true,
+    openEffect: 'fade',
+    closeEffect: 'fade',
+    skin: 'clean'
+  });
 }

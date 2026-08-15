@@ -5,9 +5,9 @@
 /* ---------- scss placeholder --------- */
 
 %heading {
-  color: var(--heading-color);
-  font-weight: 400;
-  font-family: $font-family-heading;
+  color: var(--md-on-surface);
+  font-weight: 500;
+  font-family: var(--md-font-display);
 }
 
 %section {
@@ -44,8 +44,9 @@
 }
 
 %tag-hover {
-  background: var(--tag-hover);
-  transition: background 0.35s ease-in-out;
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  transition: background var(--md-duration-medium) var(--md-easing-standard);
 }
 
 %table-cell {
@@ -55,8 +56,8 @@
 }
 
 %link-hover {
-  color: #d2603a !important;
-  border-bottom: 1px solid #d2603a;
+  color: var(--md-primary);
+  border-bottom-color: var(--md-primary);
   text-decoration: none;
 }
 
@@ -69,7 +70,11 @@
 }
 
 %clickable-transition {
-  transition: all 0.3s ease-in-out;
+  transition:
+    background-color var(--md-duration-medium) var(--md-easing-standard),
+    color var(--md-duration-medium) var(--md-easing-standard),
+    box-shadow var(--md-duration-medium) var(--md-easing-standard),
+    transform var(--md-duration-short) var(--md-easing-standard);
 }
 
 %no-cursor {
@@ -92,7 +97,7 @@
 }
 
 %rounded {
-  border-radius: $base-radius;
+  border-radius: var(--md-radius-xl);
 }
 
 %img-caption {
@@ -102,7 +107,7 @@
     font-style: normal;
     font-size: 80%;
     padding: 0;
-    color: #6d6c6c;
+    color: var(--md-on-surface-variant);
   }
 }
 

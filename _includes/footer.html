@@ -1,55 +1,27 @@
 <!-- The Footer -->
 
-<footer
-  aria-label="Site Info"
-  class="d-flex flex-column justify-content-center text-muted flex-lg-row justify-content-lg-between align-items-lg-center pb-lg-3 md-footer md-surface"
->
-  <p>
-    {{- '©' }}
-    <time>{{ 'now' | date: '%Y' }}</time>
-
+<footer aria-label="Site info" class="md-footer">
+  <p class="md-footer-brand">
     {% if site.social.links %}
-    <a href="{{ site.social.links[0] }}">{{ site.social.name }}</a>. {% else %}
-    <em class="fst-normal">{{ site.social.name }}</em>. {% endif %} {% if
-    site.data.locales[include.lang].copyright.brief %}
-    <span
-      data-bs-toggle="tooltip"
-      data-bs-placement="top"
-      title="{{ site.data.locales[include.lang].copyright.verbose }}"
-    >
-      {{- site.data.locales[include.lang].copyright.brief -}}
-    </span>
+    <a href="{{ site.social.links[0] }}">{{ site.title }}</a>
+    {% else %}
+    <span>{{ site.title }}</span>
     {% endif %}
   </p>
 
-  <p>
-    {%- capture _platform -%}
-    <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a>
-    {%- endcapture -%} {%- capture _theme -%}
-    <a
-      data-bs-toggle="tooltip"
-      data-bs-placement="top"
-      title="v{{ theme.version }}"
-      href="https://github.com/cotes2020/jekyll-theme-chirpy"
-      target="_blank"
-      rel="noopener"
-      >Chirpy</a
-    >
-    {%- endcapture -%} {{ site.data.locales[include.lang].meta | replace:
-    ':PLATFORM', _platform | replace: ':THEME', _theme }}
+  <p class="md-footer-links">
+    <a href="https://github.com/{{ site.github.username }}" target="_blank" rel="noopener">GitHub</a>
+    <span class="md-footer-sep" aria-hidden="true">·</span>
+    <a href="https://x.com/{{ site.twitter.username }}" target="_blank" rel="noopener">X</a>
+    <span class="md-footer-sep" aria-hidden="true">·</span>
+    <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+    <span class="md-footer-sep" aria-hidden="true">·</span>
+    <a href="{{ '/about/' | relative_url }}">About</a>
   </p>
 
-<!--Twikoo-->
-<!--
-  <div id="tcomment"></div>
-<script src="https://cdn.staticfile.org/twikoo/1.6.16/twikoo.all.min.js"></script>
-<script>
-twikoo.init({
-  envId: '您的环境id', // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
-  el: '#tcomment', // 容器元素
-  // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
-  // path: location.pathname, // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
-  // lang: 'zh-CN', // 用于手动设定评论区语言，支持的语言列表 https://github.com/imaegoo/twikoo/blob/main/src/client/utils/i18n/index.js
-})
-</script>
--->
+  <p class="md-footer-copy">
+    {{- '©' }}
+    <time>{{ 'now' | date: '%Y' }}</time>
+    {{ site.social.name }}
+  </p>
+</footer>

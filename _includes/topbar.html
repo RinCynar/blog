@@ -1,17 +1,26 @@
-<!-- The Top Bar -->
+<!-- The Top App Bar -->
 
-<header id="topbar-wrapper" aria-label="Top Bar" class="md-app-bar md-surface">
+<header id="topbar-wrapper" aria-label="Top bar" class="md-app-bar">
   <div
     id="topbar"
-    class="d-flex align-items-center justify-content-between px-lg-3 h-100 md-topbar"
+    class="d-flex align-items-center justify-content-between h-100 md-topbar"
   >
+    <button
+      type="button"
+      id="sidebar-trigger"
+      class="md-icon-btn"
+      aria-label="Open navigation"
+      aria-controls="sidebar"
+      aria-expanded="false"
+    >
+      <i class="fas fa-bars fa-fw" aria-hidden="true"></i>
+    </button>
+
     <nav id="breadcrumb" aria-label="Breadcrumb">
       {% assign paths = page.url | split: '/' %}
 
       {% if paths.size == 0 or page.layout == 'home' %}
-        <!-- index page -->
         <span>{{ site.data.locales[include.lang].tabs.home | capitalize }}</span>
-
       {% else %}
         {% for item in paths %}
           {% if forloop.first %}
@@ -20,14 +29,12 @@
                 {{- site.data.locales[include.lang].tabs.home | capitalize -}}
               </a>
             </span>
-
           {% elsif forloop.last %}
             {% if page.collection == 'tabs' %}
               <span>{{ site.data.locales[include.lang].tabs[item] | default: page.title }}</span>
             {% else %}
               <span>{{ page.title }}</span>
             {% endif %}
-
           {% elsif page.layout == 'category' or page.layout == 'tag' %}
             <span>
               <a href="{{ item | append: '/' | relative_url }}">
@@ -38,11 +45,6 @@
         {% endfor %}
       {% endif %}
     </nav>
-    <!-- endof #breadcrumb -->
-
-    <button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Toggle sidebar">
-      <i class="fas fa-bars fa-fw"></i>
-    </button>
 
     <div id="topbar-title" class="md-topbar-title">
       {% if page.layout == 'home' %}
@@ -55,23 +57,17 @@
       {% endif %}
     </div>
 
-    <button type="button" id="search-trigger" class="btn btn-link" aria-label="Open search">
-      <i class="fas fa-search fa-fw"></i>
-    </button>
-
-    <search id="search" class="align-items-center ms-3 ms-lg-0">
-      <i class="fas fa-search fa-fw"></i>
-      <input
-        class="form-control"
-        id="search-input"
-        type="search"
-        aria-label="search"
-        autocomplete="off"
-        placeholder="{{ site.data.locales[include.lang].search.hint | capitalize }}..."
-      >
-    </search>
-    <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">
-      {{- site.data.locales[include.lang].search.cancel -}}
+    <button
+      type="button"
+      id="search-trigger"
+      class="md-search-chip"
+      aria-label="{{ site.data.locales[include.lang].search.hint | capitalize }}"
+      aria-haspopup="dialog"
+      aria-controls="search-dialog"
+    >
+      <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+      <span class="md-search-chip-label">Search articles</span>
+      <kbd class="md-search-kbd">Ctrl K</kbd>
     </button>
   </div>
 </header>

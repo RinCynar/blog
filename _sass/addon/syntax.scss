@@ -144,20 +144,26 @@ td.rouge-code {
 }
 
 div[class^='language-'] {
-  @extend %rounded;
   @extend %code-snippet-bg;
 
-  box-shadow: var(--language-border-color) 0 0 0 1px;
+  border-radius: var(--md-radius-xl);
+  box-shadow: none;
+  overflow: hidden;
+  max-width: 100%;
+  background: var(--md-surface-container-highest);
 
   .content > & {
-    @include ml-mr(-1rem);
+    @include ml-mr(0);
 
-    border-radius: 0;
+    border-radius: var(--md-radius-xl);
   }
 
   .highlight {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    background: transparent;
   }
 }
 
@@ -187,6 +193,7 @@ div {
   height: $code-header-height;
   margin-left: 0.75rem;
   margin-right: 0.25rem;
+  background: color-mix(in srgb, var(--md-on-surface) 4%, transparent);
 
   /* the label block */
   span {
@@ -247,10 +254,11 @@ div {
     }
 
     &:not([timeout]):hover {
-      background-color: rgba(128, 128, 128, 0.37);
+      background-color: color-mix(in srgb, var(--md-primary) 12%, transparent);
+      border-radius: var(--md-radius-full);
 
       i {
-        color: white;
+        color: var(--md-on-surface);
       }
     }
   }
@@ -261,7 +269,7 @@ div {
     .content > & {
       @include ml-mr(0);
 
-      border-radius: $base-radius;
+      border-radius: var(--md-radius-xl);
     }
 
     .code-header {

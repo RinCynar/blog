@@ -6,8 +6,14 @@
 {% endif %}
 
 {% if enable_toc %}
-  <section id="toc-wrapper" class="d-none ps-0 pe-4">
-    <h2 class="panel-heading ps-3 mb-2">{{- site.data.locales[include.lang].panel.toc -}}</h2>
+  <section id="toc-wrapper" class="d-none" aria-label="{{ site.data.locales[include.lang].panel.toc }}">
+    <div class="md-sheet-handle" aria-hidden="true"></div>
+    <div class="md-toc-head">
+      <h2 class="panel-heading">{{- site.data.locales[include.lang].panel.toc -}}</h2>
+      <button type="button" id="toc-sheet-close" class="md-icon-btn" aria-label="Close contents">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+    </div>
     <nav id="toc"></nav>
   </section>
 {% endif %}

@@ -1,0 +1,232 @@
+/*
+ * Shared Material surfaces: footer, back-to-top, toast, focus, utilities.
+ */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--md-surface);
+  color: var(--md-on-surface);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing: antialiased;
+}
+
+#main-wrapper {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+  background: var(--md-surface);
+
+  > .container {
+    min-height: 100vh;
+  }
+}
+
+#topbar-wrapper.row,
+#main-wrapper > .container > .row,
+#search-result-wrapper > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#tail-wrapper > :not(script) {
+  margin-top: 2.5rem;
+}
+
+.md-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  height: auto;
+  min-height: 0;
+  padding: 2.5rem 0 2.75rem;
+  border-top: 0;
+  color: var(--md-on-surface-variant);
+  font-size: 0.8rem;
+  text-align: center;
+
+  p {
+    margin: 0;
+    text-align: center;
+  }
+
+  a {
+    color: var(--md-on-surface);
+    border-bottom: 0;
+
+    &:hover {
+      color: var(--md-primary);
+      border-bottom: 0;
+    }
+  }
+}
+
+.md-footer-brand {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--md-on-surface);
+  letter-spacing: -0.01em;
+}
+
+.md-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 0.55rem;
+  font-size: 0.85rem;
+}
+
+.md-footer-sep {
+  color: var(--md-outline);
+}
+
+.md-footer-copy {
+  margin-top: 0.25rem;
+  opacity: 0.8;
+}
+
+#back-to-top {
+  visibility: hidden;
+  opacity: 0;
+  z-index: 15;
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  transition:
+    opacity var(--md-duration-medium) var(--md-easing-standard),
+    transform var(--md-duration-short) var(--md-easing-standard);
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+#notification {
+  @keyframes popup {
+    from {
+      opacity: 0;
+      bottom: 0;
+    }
+  }
+
+  .toast-header {
+    background: none;
+    border-bottom: none;
+    color: inherit;
+  }
+
+  .toast-body {
+    font-family: var(--md-font-body);
+    line-height: 1.25rem;
+
+    button {
+      font-size: 90%;
+      min-width: 4rem;
+    }
+  }
+
+  &.toast.show {
+    display: block;
+    min-width: 20rem;
+    border-radius: var(--md-radius-xl);
+    backdrop-filter: blur(16px);
+    background-color: var(--md-surface-container-high);
+    color: var(--md-on-surface);
+    position: fixed;
+    left: 50%;
+    bottom: 20%;
+    transform: translateX(-50%);
+    animation: popup var(--md-duration-long) var(--md-easing-standard);
+    box-shadow: var(--md-elevation-3);
+  }
+}
+
+.btn-box-shadow {
+  box-shadow: none;
+}
+
+.text-muted {
+  color: var(--md-on-surface-variant) !important;
+}
+
+.tooltip-inner {
+  font-size: 0.75rem;
+  max-width: 220px;
+  text-align: left;
+  border-radius: var(--md-radius-sm);
+  background: var(--md-inverse-surface);
+  color: var(--md-inverse-on-surface);
+}
+
+.disabled {
+  color: var(--md-outline);
+  pointer-events: auto;
+  cursor: not-allowed;
+}
+
+.hide-border-bottom {
+  border-bottom: none;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.rounded-10 {
+  border-radius: var(--md-radius-md);
+}
+
+.img-link {
+  color: transparent;
+  display: inline-flex;
+}
+
+.left {
+  float: left;
+  margin: 0.75rem 1rem 1rem 0;
+}
+
+.right {
+  float: right;
+  margin: 0.75rem 0 1rem 1rem;
+}
+
+.mermaid {
+  text-align: center;
+}
+
+mjx-container {
+  overflow-y: hidden;
+  min-width: auto;
+}
+
+kbd {
+  font-family: var(--md-font-mono);
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.3rem;
+  min-width: 1.5rem;
+  text-align: center;
+  margin: 0 0.2rem;
+  padding: 0.05rem 0.35rem;
+  color: var(--md-on-surface);
+  background-color: var(--md-surface-container-highest);
+  border-radius: var(--md-radius-xs);
+  border: 1px solid var(--md-outline-variant);
+  box-shadow: none;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--md-outline-variant);
+  opacity: 1;
+}
+
+/* taxonomy styles live in addon/taxonomy.scss */

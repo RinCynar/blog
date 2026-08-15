@@ -1,7 +1,7 @@
+@import 'addon/tokens';
+@import 'addon/variables';
 @import 'colors/typography-light';
 @import 'colors/typography-dark';
-@import 'addon/variables';
-@import 'material-you';
 @import 'variables-hook';
 @import 'addon/module';
 @import 'addon/syntax';
@@ -12,3 +12,14 @@
 @import 'layout/archives';
 @import 'layout/categories';
 @import 'layout/category-tag';
+@import 'addon/typography';
+@import 'addon/buttons';
+@import 'addon/navigation';
+@import 'addon/cards';
+@import 'addon/article';
+@import 'addon/media';
+@import 'addon/toc';
+@import 'addon/search';
+@import 'addon/taxonomy';
+@import 'addon/material';
+@import 'addon/responsive';

@@ -14,6 +14,9 @@ export function back2top() {
   });
 
   btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0 });
+    const reduce = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   });
 }

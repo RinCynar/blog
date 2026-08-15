@@ -1,112 +1,138 @@
 /*
- * The syntax light mode typography colors
+ * Light scheme — Material 3 tokens + Chirpy compatibility aliases.
+ * Seed: blue-violet. Surfaces stay near-neutral so the site is not "all purple".
  */
 
 @mixin light-scheme {
-  /* Framework color */
-  --main-bg: white;
-  --mask-bg: #c1c3c5;
-  --main-border-color: #f3f3f3;
+  /* Primary */
+  --md-primary: #4f46b8;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #e3dfff;
+  --md-on-primary-container: #160067;
 
-  /* Common color */
-  --text-color: #34343c;
-  --text-muted-color: #757575;
-  --text-muted-hightlight-color: inherit;
-  --heading-color: #2a2a2a;
-  --label-color: #585858;
-  --blockquote-border-color: #eeeeee;
-  --blockquote-text-color: #757575;
-  --link-color: #0056b2;
-  --link-underline-color: #dee2e6;
-  --button-bg: #ffffff;
-  --btn-border-color: #e9ecef;
-  --btn-backtotop-color: #686868;
-  --btn-backtotop-border-color: #f1f1f1;
-  --btn-box-shadow: #eaeaea;
-  --checkbox-color: #c5c5c5;
-  --checkbox-checked-color: #07a8f7;
-  --img-bg: radial-gradient(
-    circle,
-    rgb(255, 255, 255) 0%,
-    rgb(239, 239, 239) 100%
-  );
+  /* Secondary */
+  --md-secondary: #5f5c71;
+  --md-on-secondary: #ffffff;
+  --md-secondary-container: #e5dff9;
+  --md-on-secondary-container: #1b192c;
+
+  /* Tertiary */
+  --md-tertiary: #7c5264;
+  --md-on-tertiary: #ffffff;
+  --md-tertiary-container: #ffd8e6;
+  --md-on-tertiary-container: #301120;
+
+  /* Surface */
+  --md-surface: #f8f5fa;
+  --md-surface-dim: #d9d5db;
+  --md-surface-bright: #f8f5fa;
+  --md-surface-container-lowest: #ffffff;
+  --md-surface-container-low: #f3f0f5;
+  --md-surface-container: #eeeaf0;
+  --md-surface-container-high: #e8e4ea;
+  --md-surface-container-highest: #e2dee4;
+  --md-on-surface: #1c1b1f;
+  --md-on-surface-variant: #49454e;
+  --md-inverse-surface: #313033;
+  --md-inverse-on-surface: #f4eff4;
+  --md-inverse-primary: #c5c0ff;
+
+  /* Outline */
+  --md-outline: #7a757f;
+  --md-outline-variant: #cac5d0;
+
+  /* Error / scrim */
+  --md-error: #b3261e;
+  --md-on-error: #ffffff;
+  --md-error-container: #f9dedc;
+  --md-on-error-container: #410e0b;
+  --md-scrim: rgba(0, 0, 0, 0.4);
+  --md-shadow: rgba(28, 27, 31, 0.12);
+
+  /* Chirpy compatibility — all map to Material tokens */
+  --main-bg: var(--md-surface);
+  --mask-bg: var(--md-scrim);
+  --main-border-color: var(--md-outline-variant);
+  --text-color: var(--md-on-surface);
+  --text-muted-color: var(--md-on-surface-variant);
+  --text-muted-hightlight-color: var(--md-on-surface);
+  --heading-color: var(--md-on-surface);
+  --label-color: var(--md-on-surface-variant);
+  --blockquote-border-color: var(--md-secondary-container);
+  --blockquote-text-color: var(--md-on-surface-variant);
+  --link-color: var(--md-primary);
+  --link-underline-color: var(--md-outline-variant);
+  --button-bg: var(--md-surface-container-highest);
+  --btn-border-color: var(--md-outline-variant);
+  --btn-backtotop-color: var(--md-on-surface);
+  --btn-backtotop-border-color: transparent;
+  --btn-box-shadow: var(--md-shadow);
+  --checkbox-color: var(--md-outline);
+  --checkbox-checked-color: var(--md-primary);
+  --img-bg: var(--md-surface-container);
   --shimmer-bg: linear-gradient(
     90deg,
     rgba(250, 250, 250, 0) 0%,
-    rgba(232, 230, 230, 1) 50%,
+    var(--md-surface-container-highest) 50%,
     rgba(250, 250, 250, 0) 100%
   );
-
-  /* Sidebar */
-  --site-title-color: rgb(113, 113, 113);
-  --site-subtitle-color: #717171;
-  --sidebar-bg: #f6f8fa;
-  --sidebar-border-color: #efefef;
-  --sidebar-muted-color: #545454;
-  --sidebar-active-color: #1d1d1d;
-  --sidebar-hover-bg: rgb(223, 233, 241, 0.64);
-  --sidebar-btn-bg: white;
-  --sidebar-btn-color: #8e8e8e;
-  --avatar-border-color: white;
-
-  /* Topbar */
-  --topbar-bg: rgb(255, 255, 255, 0.7);
-  --topbar-text-color: rgb(78, 78, 78);
-  --search-border-color: rgb(240, 240, 240);
-  --search-icon-color: #c2c6cc;
-  --input-focus-border-color: #b8b8b8;
-
-  /* Home page */
-  --post-list-text-color: dimgray;
-  --btn-patinator-text-color: #555555;
-  --btn-paginator-hover-color: var(--sidebar-bg);
-
-  /* Posts */
-  --toc-highlight: #0550ae;
-  --btn-share-color: gray;
-  --btn-share-hover-color: #0d6efd;
-  --card-bg: white;
-  --card-hovor-bg: #e2e2e2;
-  --card-shadow: rgb(104, 104, 104, 0.05) 0 2px 6px 0,
-    rgba(211, 209, 209, 0.15) 0 0 0 1px;
-  --footnote-target-bg: lightcyan;
-  --tb-odd-bg: #fbfcfd;
-  --tb-border-color: #eaeaea;
-  --dash-color: silver;
-  --kbd-wrap-color: #bdbdbd;
-  --kbd-text-color: var(--text-color);
-  --kbd-bg-color: white;
-  --prompt-text-color: rgb(46, 46, 46, 0.77);
-  --prompt-tip-bg: rgb(123, 247, 144, 0.2);
+  --site-title-color: var(--md-on-surface);
+  --site-subtitle-color: var(--md-on-surface-variant);
+  --sidebar-bg: var(--md-surface-container);
+  --sidebar-border-color: transparent;
+  --sidebar-muted-color: var(--md-on-surface-variant);
+  --sidebar-active-color: var(--md-on-secondary-container);
+  --sidebar-hover-bg: var(--md-surface-container-high);
+  --sidebar-btn-bg: var(--md-surface-container-highest);
+  --sidebar-btn-color: var(--md-on-surface-variant);
+  --avatar-border-color: transparent;
+  --topbar-bg: color-mix(in srgb, var(--md-surface) 88%, transparent);
+  --topbar-text-color: var(--md-on-surface);
+  --search-border-color: transparent;
+  --search-icon-color: var(--md-on-surface-variant);
+  --input-focus-border-color: var(--md-primary);
+  --post-list-text-color: var(--md-on-surface-variant);
+  --btn-patinator-text-color: var(--md-on-surface);
+  --btn-paginator-hover-color: var(--md-secondary-container);
+  --toc-highlight: var(--md-on-secondary-container);
+  --btn-share-color: var(--md-on-surface-variant);
+  --btn-share-hover-color: var(--md-primary);
+  --card-bg: var(--md-surface-container);
+  --card-hovor-bg: var(--md-surface-container-high);
+  --card-shadow: none;
+  --footnote-target-bg: var(--md-primary-container);
+  --tb-odd-bg: var(--md-surface-container-low);
+  --tb-even-bg: var(--md-surface);
+  --tb-border-color: var(--md-outline-variant);
+  --dash-color: var(--md-outline-variant);
+  --kbd-wrap-color: var(--md-outline-variant);
+  --kbd-text-color: var(--md-on-surface);
+  --kbd-bg-color: var(--md-surface-container-highest);
+  --prompt-text-color: var(--md-on-surface);
+  --prompt-tip-bg: rgba(123, 247, 144, 0.2);
   --prompt-tip-icon-color: #03b303;
-  --prompt-info-bg: #e1f5fe;
-  --prompt-info-icon-color: #0070cb;
+  --prompt-info-bg: var(--md-primary-container);
+  --prompt-info-icon-color: var(--md-primary);
   --prompt-warning-bg: rgb(255, 243, 205);
   --prompt-warning-icon-color: #ef9c03;
-  --prompt-danger-bg: rgb(248, 215, 218, 0.56);
-  --prompt-danger-icon-color: #df3c30;
-
-  /* Tags */
-  --tag-border: #dee2e6;
-  --tag-shadow: var(--btn-border-color);
-  --tag-hover: rgb(222, 226, 230);
-  --search-tag-bg: #f8f9fa;
+  --prompt-danger-bg: var(--md-error-container);
+  --prompt-danger-icon-color: var(--md-error);
+  --tag-border: transparent;
+  --tag-shadow: transparent;
+  --tag-hover: var(--md-secondary-container);
+  --search-tag-bg: var(--md-surface-container-high);
+  --categories-border: var(--md-outline-variant);
+  --categories-hover-bg: var(--md-surface-container-high);
+  --categories-icon-hover-color: var(--md-on-surface);
+  --timeline-color: var(--md-outline-variant);
+  --timeline-node-bg: var(--md-primary);
+  --timeline-year-dot-color: var(--md-on-primary);
 
   [class^='prompt-'] {
-    --link-underline-color: rgb(219, 216, 216);
+    --link-underline-color: var(--md-outline-variant);
   }
 
   .dark {
     display: none;
   }
-
-  /* Categories */
-  --categories-border: rgba(0, 0, 0, 0.125);
-  --categories-hover-bg: var(--btn-border-color);
-  --categories-icon-hover-color: darkslategray;
-
-  /* Archive */
-  --timeline-color: rgba(0, 0, 0, 0.075);
-  --timeline-node-bg: #c2c6cc;
-  --timeline-year-dot-color: #ffffff;
 } /* light-scheme */

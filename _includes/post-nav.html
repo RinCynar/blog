@@ -7,13 +7,13 @@
   {% if page.previous.url %}
     <a
       href="{{ site.baseurl }}{{ page.previous.url }}"
-      class="btn btn-outline-primary"
+      class="md-btn"
       aria-label="{{ previous }}"
     >
       <p>{{ page.previous.title }}</p>
     </a>
   {% else %}
-    <div class="btn btn-outline-primary disabled" aria-label="{{ previous }}">
+    <div class="md-btn disabled" aria-label="{{ previous }}">
       <p>-</p>
     </div>
   {% endif %}
@@ -21,13 +21,13 @@
   {% if page.next.url %}
     <a
       href="{{ site.baseurl }}{{page.next.url}}"
-      class="btn btn-outline-primary"
+      class="md-btn"
       aria-label="{{ next }}"
     >
       <p>{{ page.next.title }}</p>
     </a>
   {% else %}
-    <div class="btn btn-outline-primary disabled" aria-label="{{ next }}">
+    <div class="md-btn disabled" aria-label="{{ next }}">
       <p>-</p>
     </div>
   {% endif %}
