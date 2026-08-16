@@ -4,6 +4,10 @@
   icon: "fas fa-rss"
   noblank: true
 
+- type: contact
+  icon: "fas fa-phone"
+  url: "https://rincynar.top/contact"
+
 # Uncomment and complete the url below to enable more contact options
 #
 # - type: mastodon
