@@ -1,4 +1,4 @@
-import { baseurl } from '../../_config.yml';
+import { baseurl } from '../_config.yml';
 
 importScripts(`${baseurl}/assets/js/data/swconf.js`);
 

@@ -8,7 +8,8 @@ import yaml from '@rollup/plugin-yaml';
 
 const SRC_DEFAULT = '_javascript';
 const DIST_DEFAULT = 'assets/js/dist';
-const SRC_PWA = `${SRC_DEFAULT}/pwa`;
+// PWA sources live at repo root `pwa/`, not under `_javascript/`.
+const SRC_PWA = 'pwa';
 
 const isProd = process.env.BUILD === 'production';
 
