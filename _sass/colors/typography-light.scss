@@ -1,45 +1,45 @@
 /*
  * Light scheme — Material 3 tokens + Chirpy compatibility aliases.
- * Seed: blue-violet. Surfaces stay near-neutral so the site is not "all purple".
+ * Seed: #39c5bb. Surfaces stay near-neutral so the site is not "all teal".
  */
 
 @mixin light-scheme {
   /* Primary */
-  --md-primary: #4f46b8;
+  --md-primary: #2b968f;
   --md-on-primary: #ffffff;
-  --md-primary-container: #e3dfff;
-  --md-on-primary-container: #160067;
+  --md-primary-container: #dafbf9;
+  --md-on-primary-container: #0c4541;
 
   /* Secondary */
-  --md-secondary: #5f5c71;
+  --md-secondary: #516970;
   --md-on-secondary: #ffffff;
-  --md-secondary-container: #e5dff9;
-  --md-on-secondary-container: #1b192c;
+  --md-secondary-container: #e2eff3;
+  --md-on-secondary-container: #212d31;
 
   /* Tertiary */
-  --md-tertiary: #7c5264;
+  --md-tertiary: #515470;
   --md-on-tertiary: #ffffff;
-  --md-tertiary-container: #ffd8e6;
-  --md-on-tertiary-container: #301120;
+  --md-tertiary-container: #e2e4f3;
+  --md-on-tertiary-container: #212231;
 
   /* Surface */
-  --md-surface: #f8f5fa;
-  --md-surface-dim: #d9d5db;
-  --md-surface-bright: #f8f5fa;
+  --md-surface: #fafafa;
+  --md-surface-dim: #dce0df;
+  --md-surface-bright: #fafafa;
   --md-surface-container-lowest: #ffffff;
-  --md-surface-container-low: #f3f0f5;
-  --md-surface-container: #eeeaf0;
-  --md-surface-container-high: #e8e4ea;
-  --md-surface-container-highest: #e2dee4;
-  --md-on-surface: #1c1b1f;
-  --md-on-surface-variant: #49454e;
-  --md-inverse-surface: #313033;
-  --md-inverse-on-surface: #f4eff4;
-  --md-inverse-primary: #c5c0ff;
+  --md-surface-container-low: #f4f5f5;
+  --md-surface-container: #eff0f0;
+  --md-surface-container-high: #eaeceb;
+  --md-surface-container-highest: #e4e7e7;
+  --md-on-surface: #161d1c;
+  --md-on-surface-variant: #465352;
+  --md-inverse-surface: #2e3837;
+  --md-inverse-on-surface: #f1f3f3;
+  --md-inverse-primary: #b0e8e4;
 
   /* Outline */
-  --md-outline: #7a757f;
-  --md-outline-variant: #cac5d0;
+  --md-outline: #788786;
+  --md-outline-variant: #c9cfcf;
 
   /* Error / scrim */
   --md-error: #b3261e;

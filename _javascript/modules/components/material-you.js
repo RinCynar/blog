@@ -1,8 +1,10 @@
 /**
  * Material You helpers:
  * - theme-color meta from surface token
- * - optional accent from avatar, mapped onto the M3 roles
+ * - M3 tonal palette derived from a fixed seed
  */
+
+const SEED_HEX = '#39c5bb';
 
 function ensureMeta() {
   let meta = document.querySelector('meta[name="theme-color"]:not([media])');
@@ -107,96 +109,7 @@ function updateThemeColor() {
   if (surface) meta.setAttribute('content', surface);
 }
 
-function rgbToHex(r, g, b) {
-  const toHex = (n) => `0${Math.round(n).toString(16)}`.slice(-2);
-  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-}
-
-function sampleImage(image) {
-  try {
-    const canvas = document.createElement('canvas');
-    const size = 32;
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(image, 0, 0, size, size);
-    const data = ctx.getImageData(0, 0, size, size).data;
-    let r = 0;
-    let g = 0;
-    let b = 0;
-    let count = 0;
-    for (let i = 0; i < data.length; i += 4) {
-      if (data[i + 3] < 125) continue;
-      const rr = data[i];
-      const gg = data[i + 1];
-      const bb = data[i + 2];
-      const luminance = 0.2126 * rr + 0.7152 * gg + 0.0722 * bb;
-      if (luminance > 240 || luminance < 10) continue;
-      r += rr;
-      g += gg;
-      b += bb;
-      count += 1;
-    }
-    if (count === 0) return null;
-    return rgbToHex(r / count, g / count, b / count);
-  } catch (e) {
-    return null;
-  }
-}
-
-async function extractAccentFromImage(imgEl) {
-  if (!imgEl) return null;
-  const src = imgEl.currentSrc || imgEl.src;
-  if (!src) return null;
-
-  try {
-    const testImg = new Image();
-    testImg.crossOrigin = 'Anonymous';
-    const loaded = await new Promise((resolve) => {
-      testImg.onload = () => resolve(testImg);
-      testImg.onerror = () => resolve(null);
-      testImg.src = src;
-    });
-    if (loaded) {
-      const color = sampleImage(loaded);
-      if (color) return color;
-    }
-  } catch (e) {
-    /* ignore */
-  }
-
-  try {
-    if (imgEl.complete && imgEl.naturalWidth) {
-      return sampleImage(imgEl);
-    }
-  } catch (e) {
-    /* canvas tainted */
-  }
-
-  return null;
-}
-
 let seedHex = null;
-
-function bindAccent() {
-  const avatarImg =
-    document.querySelector('#avatar-img') ||
-    document.querySelector('#avatar img');
-  if (!avatarImg) return;
-
-  const applyFromImg = async () => {
-    const hex = await extractAccentFromImage(avatarImg);
-    if (!hex) return;
-    seedHex = hex;
-    applyPalette(hex);
-  };
-
-  if (avatarImg.complete) {
-    applyFromImg();
-  } else {
-    avatarImg.addEventListener('load', applyFromImg, { once: true });
-  }
-}
 
 function watchMode() {
   const refresh = () => {
@@ -215,8 +128,8 @@ function watchMode() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  updateThemeColor();
-  bindAccent();
+  seedHex = SEED_HEX;
+  applyPalette(SEED_HEX);
   watchMode();
   window.MaterialYou = {
     setAccentColor: (hex) => {
