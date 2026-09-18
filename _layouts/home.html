@@ -5,47 +5,39 @@ refactor: true
 
 {% include lang.html %}
 
-{% assign pinned = site.posts | where: 'pin', 'true' %}
-{% assign default = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
+{% if lang == 'en' %}
+  {% assign lang_posts = site.posts | where: 'lang', 'en' %}
+{% elsif lang == 'ja' %}
+  {% assign lang_posts = site.posts | where: 'lang', 'ja' %}
+{% else %}
+  {% assign lang_posts = site.posts | where_exp: 'item', "item.lang == 'zh-CN' or item.lang == 'zh' or item.lang == nil" %}
+{% endif %}
+
+{% assign pinned = lang_posts | where: 'pin', 'true' %}
+{% assign default = lang_posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
 
 {% assign posts = '' | split: '' %}
-
-<!-- Get pinned posts -->
-
-{% assign offset = paginator.page | minus: 1 | times: paginator.per_page %}
-{% assign pinned_num = pinned.size | minus: offset %}
-
-{% if pinned_num > 0 %}
-  {% for i in (offset..pinned.size) limit: pinned_num %}
-    {% assign posts = posts | push: pinned[i] %}
-  {% endfor %}
-{% else %}
-  {% assign pinned_num = 0 %}
-{% endif %}
-
-<!-- Get default posts -->
-
-{% assign default_beg = offset | minus: pinned.size %}
-
-{% if default_beg < 0 %}
-  {% assign default_beg = 0 %}
-{% endif %}
-
-{% assign default_num = paginator.posts | size | minus: pinned_num %}
-{% assign default_end = default_beg | plus: default_num | minus: 1 %}
-
-{% if default_num > 0 %}
-  {% for i in (default_beg..default_end) %}
-    {% assign posts = posts | push: default[i] %}
-  {% endfor %}
-{% endif %}
+{% for p in pinned %}
+  {% assign posts = posts | push: p %}
+{% endfor %}
+{% for p in default %}
+  {% assign posts = posts | push: p %}
+{% endfor %}
 
 <div id="post-list" class="flex-grow-1 px-xl-1">
-  <h1 class="md-page-kicker">Latest Posts</h1>
+  <h1 class="md-page-kicker">
+    {% if lang == 'zh-CN' or lang == 'zh' %}
+      最新文章
+    {% elsif lang == 'ja' %}
+      最新の投稿
+    {% else %}
+      Latest Posts
+    {% endif %}
+  </h1>
 
   {% for post in posts %}
     {% assign is_featured = false %}
-    {% if forloop.first and paginator.page == 1 %}
+    {% if forloop.first %}
       {% assign is_featured = true %}
     {% endif %}
 
@@ -90,7 +82,7 @@ refactor: true
               {% if post.pin %}
                 <span class="pin ms-2">
                   <i class="fas fa-thumbtack fa-fw" aria-hidden="true"></i>
-                  <span>{{ site.data.locales[lang].post.pin_prompt }}</span>
+                  <span>{{ site.data.locales[lang].post.pin_prompt | default: 'Pinned' }}</span>
                 </span>
               {% endif %}
             </div>
@@ -100,7 +92,3 @@ refactor: true
     </article>
   {% endfor %}
 </div>
-
-{% if paginator.total_pages > 1 %}
-  {% include post-paginator.html %}
-{% endif %}

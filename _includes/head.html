@@ -1,5 +1,33 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <!-- Language Auto Detection for Root Landing -->
+  <script>
+    (function() {
+      try {
+        var path = window.location.pathname;
+        if (path === '/' || path === '') {
+          var savedLang = localStorage.getItem('pref-lang');
+          if (!savedLang) {
+            var navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+            if (navLang.indexOf('ja') === 0) {
+              window.location.replace('{{ "/ja/" | relative_url }}');
+            } else if (navLang.indexOf('zh') === 0) {
+              // Stay on root for Chinese
+            } else {
+              // Fallback to English
+              window.location.replace('{{ "/en/" | relative_url }}');
+            }
+          } else if (savedLang === 'en') {
+            window.location.replace('{{ "/en/" | relative_url }}');
+          } else if (savedLang === 'ja') {
+            window.location.replace('{{ "/ja/" | relative_url }}');
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1010">
   <meta name="apple-mobile-web-app-capable" content="yes">

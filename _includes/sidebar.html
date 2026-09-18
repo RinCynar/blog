@@ -14,8 +14,16 @@
     <i class="fas fa-times" aria-hidden="true"></i>
   </button>
 
+  {% if include.lang == 'en' %}
+    {% assign home_url = '/en/' %}
+  {% elsif include.lang == 'ja' %}
+    {% assign home_url = '/ja/' %}
+  {% else %}
+    {% assign home_url = '/' %}
+  {% endif %}
+
   <header class="profile-wrapper md-profile">
-    <a href="{{ '/' | relative_url }}" id="avatar" class="rounded-circle">
+    <a href="{{ home_url | relative_url }}" id="avatar" class="rounded-circle">
       {%- if site.avatar != empty and site.avatar -%}
         {%- capture avatar_url -%}
           {% include media-url.html src=site.avatar %}
@@ -25,7 +33,7 @@
     </a>
 
     <h1 class="site-title md-site-title">
-      <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <a href="{{ home_url | relative_url }}">{{ site.title }}</a>
     </h1>
     <p class="site-subtitle mb-0 md-site-subtitle">{{ site.tagline }}</p>
   </header>
@@ -34,7 +42,7 @@
     <ul class="nav">
       <li class="nav-item{% if page.layout == 'home' %}{{ " active" }}{% endif %}">
         <a
-          href="{{ '/' | relative_url }}"
+          href="{{ home_url | relative_url }}"
           class="nav-link"
           title="{{ site.data.locales[include.lang].tabs.home }}"
           {% if page.layout == 'home' %}aria-current="page"{% endif %}
@@ -45,12 +53,27 @@
       </li>
       {% for tab in site.tabs %}
         {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
-        <li class="nav-item{% if tab.url == page.url %}{{ " active" }}{% endif %}">
+        {% if tab_name contains 'about-' %}
+          {% continue %}
+        {% endif %}
+
+        {% assign tab_href = tab.url %}
+        {% if tab_name == 'about' %}
+          {% if include.lang == 'en' %}
+            {% assign tab_href = '/en/about/' %}
+          {% elsif include.lang == 'ja' %}
+            {% assign tab_href = '/ja/about/' %}
+          {% else %}
+            {% assign tab_href = '/about/' %}
+          {% endif %}
+        {% endif %}
+
+        <li class="nav-item{% if tab_href == page.url or tab.url == page.url %}{{ " active" }}{% endif %}">
           <a
-            href="{{ tab.url | relative_url }}"
+            href="{{ tab_href | relative_url }}"
             class="nav-link"
             title="{{ site.data.locales[include.lang].tabs[tab_name] | default: tab.title }}"
-            {% if tab.url == page.url %}aria-current="page"{% endif %}
+            {% if tab_href == page.url or tab.url == page.url %}aria-current="page"{% endif %}
           >
             <i class="fa-fw {{ tab.icon }}" aria-hidden="true"></i>
             <span>{{ site.data.locales[include.lang].tabs[tab_name] | default: tab.title }}</span>
@@ -66,6 +89,49 @@
         <i class="fas fa-adjust" aria-hidden="true"></i>
       </button>
     {% endunless %}
+
+    <!-- Material You Language Switcher -->
+    <div class="position-relative" id="lang-switcher-wrapper">
+      <button
+        type="button"
+        class="md-icon-btn"
+        aria-label="{{ site.data.locales[include.lang].language_switch.label | default: 'Switch Language' }}"
+        id="lang-toggle"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i class="fas fa-language" aria-hidden="true"></i>
+      </button>
+      <div id="lang-menu" class="md-lang-menu" role="menu" hidden>
+        <button
+          type="button"
+          class="md-lang-item{% if include.lang == 'zh-CN' or include.lang == 'zh' %} active{% endif %}"
+          data-lang="zh-CN"
+          role="menuitem"
+        >
+          <span class="md-lang-label">中文</span>
+          <i class="fas fa-check md-lang-check" aria-hidden="true"></i>
+        </button>
+        <button
+          type="button"
+          class="md-lang-item{% if include.lang == 'en' %} active{% endif %}"
+          data-lang="en"
+          role="menuitem"
+        >
+          <span class="md-lang-label">English</span>
+          <i class="fas fa-check md-lang-check" aria-hidden="true"></i>
+        </button>
+        <button
+          type="button"
+          class="md-lang-item{% if include.lang == 'ja' %} active{% endif %}"
+          data-lang="ja"
+          role="menuitem"
+        >
+          <span class="md-lang-label">日本語</span>
+          <i class="fas fa-check md-lang-check" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
 
     {% for entry in site.data.contact %}
       {% case entry.type %}

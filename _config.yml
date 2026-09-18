@@ -180,6 +180,25 @@ defaults:
       # DO NOT modify the following parameter unless you are confident enough
       # to update the code of all other post links in this project.
       permalink: /posts/:title/
+      lang: zh-CN
+  - scope:
+      path: "_posts/en"
+      type: posts
+    values:
+      layout: post
+      comments: true
+      toc: true
+      permalink: /en/posts/:title/
+      lang: en
+  - scope:
+      path: "_posts/ja"
+      type: posts
+    values:
+      layout: post
+      comments: true
+      toc: true
+      permalink: /ja/posts/:title/
+      lang: ja
   - scope:
       path: _drafts
     values:

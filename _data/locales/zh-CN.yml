@@ -9,7 +9,6 @@ layout:
 
 # The tabs of sidebar
 tabs:
-  # format: <filename_without_extension>: <value>
   home: 首页
   categories: 分类
   tags: 标签
@@ -81,3 +80,10 @@ df:
 categories:
   category_measure: 个分类
   post_measure: 篇文章
+
+# ----- Language switcher -----
+language_switch:
+  label: 语言
+  zh: 中文
+  en: English
+  ja: 日本語

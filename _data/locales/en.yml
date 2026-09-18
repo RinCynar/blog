@@ -9,7 +9,6 @@ layout:
 
 # The tabs of sidebar
 tabs:
-  # format: <filename_without_extension>: <value>
   home: Home
   categories: Categories
   tags: Tags
@@ -89,3 +88,10 @@ categories:
   post_measure:
     singular: post
     plural: posts
+
+# ----- Language switcher -----
+language_switch:
+  label: Language
+  zh: 中文
+  en: English
+  ja: 日本語

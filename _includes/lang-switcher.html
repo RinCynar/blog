@@ -1,0 +1,71 @@
+<!-- Material You Language Switcher Interaction -->
+<script>
+  (function () {
+    const langToggle = document.getElementById('lang-toggle');
+    const langMenu = document.getElementById('lang-menu');
+    if (!langToggle || !langMenu) return;
+
+    function toggleMenu(show) {
+      const isExpanded = show !== undefined ? show : langMenu.hasAttribute('hidden');
+      if (isExpanded) {
+        langMenu.removeAttribute('hidden');
+        langToggle.setAttribute('aria-expanded', 'true');
+      } else {
+        langMenu.setAttribute('hidden', '');
+        langToggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+
+    langToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!langMenu.contains(e.target) && e.target !== langToggle && !langToggle.contains(e.target)) {
+        toggleMenu(false);
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        toggleMenu(false);
+      }
+    });
+
+    const items = langMenu.querySelectorAll('.md-lang-item');
+    items.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const targetLang = btn.getAttribute('data-lang');
+        if (!targetLang) return;
+
+        try {
+          localStorage.setItem('pref-lang', targetLang.startsWith('zh') ? 'zh' : targetLang);
+        } catch (e) {}
+
+        const currentPath = window.location.pathname;
+        const isEn = currentPath.startsWith('/en/') || currentPath === '/en';
+        const isJa = currentPath.startsWith('/ja/') || currentPath === '/ja';
+
+        let canonicalPath = currentPath;
+        if (isEn) {
+          canonicalPath = currentPath.replace(/^\/en/, '') || '/';
+        } else if (isJa) {
+          canonicalPath = currentPath.replace(/^\/ja/, '') || '/';
+        }
+
+        let targetUrl = canonicalPath;
+        if (targetLang === 'en') {
+          targetUrl = canonicalPath === '/' ? '{{ "/en/" | relative_url }}' : ('{{ "/en" | relative_url }}' + canonicalPath);
+        } else if (targetLang === 'ja') {
+          targetUrl = canonicalPath === '/' ? '{{ "/ja/" | relative_url }}' : ('{{ "/ja" | relative_url }}' + canonicalPath);
+        } else {
+          targetUrl = canonicalPath === '/' ? '{{ "/" | relative_url }}' : ('{{ "" | relative_url }}' + canonicalPath);
+        }
+
+        targetUrl = targetUrl.replace(/\/+/g, '/');
+        window.location.href = targetUrl;
+      });
+    });
+  })();
+</script>

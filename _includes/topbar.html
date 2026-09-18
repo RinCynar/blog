@@ -19,13 +19,21 @@
     <nav id="breadcrumb" aria-label="Breadcrumb">
       {% assign paths = page.url | split: '/' %}
 
+      {% if include.lang == 'en' %}
+        {% assign home_url = '/en/' %}
+      {% elsif include.lang == 'ja' %}
+        {% assign home_url = '/ja/' %}
+      {% else %}
+        {% assign home_url = '/' %}
+      {% endif %}
+
       {% if paths.size == 0 or page.layout == 'home' %}
         <span>{{ site.data.locales[include.lang].tabs.home | capitalize }}</span>
       {% else %}
         {% for item in paths %}
           {% if forloop.first %}
             <span>
-              <a href="{{ '/' | relative_url }}">
+              <a href="{{ home_url | relative_url }}">
                 {{- site.data.locales[include.lang].tabs.home | capitalize -}}
               </a>
             </span>

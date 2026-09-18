@@ -220,6 +220,91 @@ $sidebar-display: 'sidebar-display';
     .icon-border {
       display: none;
     }
+
+    #lang-switcher-wrapper {
+      position: relative;
+    }
+
+    .md-lang-menu {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 140px;
+      padding: 0.375rem;
+      background: var(--md-surface-container-high);
+      border: 1px solid var(--md-outline-variant);
+      border-radius: var(--md-radius-lg);
+      box-shadow: var(--md-elevation-2);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      animation: md-menu-fade-in var(--md-duration-short) var(--md-easing-emphasized);
+
+      &[hidden] {
+        display: none !important;
+      }
+    }
+
+    .md-lang-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 38px;
+      padding: 0.5rem 0.75rem;
+      border: 0;
+      border-radius: var(--md-radius-md);
+      background: transparent;
+      color: var(--md-on-surface);
+      font-family: var(--md-font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      transition:
+        background-color var(--md-duration-short) var(--md-easing-standard),
+        color var(--md-duration-short) var(--md-easing-standard);
+
+      &:hover {
+        background: color-mix(in srgb, var(--md-on-surface) 8%, transparent);
+      }
+
+      &:active {
+        background: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+      }
+
+      &.active {
+        background: var(--md-secondary-container);
+        color: var(--md-on-secondary-container);
+        font-weight: 600;
+
+        .md-lang-check {
+          display: inline-block;
+          color: var(--md-on-secondary-container);
+        }
+      }
+
+      .md-lang-check {
+        display: none;
+        font-size: 0.75rem;
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}
+
+@keyframes md-menu-fade-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
   }
 }
 
