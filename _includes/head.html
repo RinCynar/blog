@@ -1,30 +1,82 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  <!-- Language Auto Detection for Root Landing -->
+  <!-- Material You Language Auto Detection & Routing (Posts & Site-Wide) -->
   <script>
-    (function() {
+    (function () {
       try {
-        var path = window.location.pathname;
-        if (path === '/' || path === '') {
-          var savedLang = localStorage.getItem('pref-lang');
-          if (!savedLang) {
-            var navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-            if (navLang.indexOf('ja') === 0) {
-              window.location.replace('{{ "/ja/" | relative_url }}');
-            } else if (navLang.indexOf('zh') === 0) {
-              // Stay on root for Chinese
-            } else {
-              // Fallback to English
-              window.location.replace('{{ "/en/" | relative_url }}');
-            }
-          } else if (savedLang === 'en') {
-            window.location.replace('{{ "/en/" | relative_url }}');
-          } else if (savedLang === 'ja') {
-            window.location.replace('{{ "/ja/" | relative_url }}');
+        var userPref = localStorage.getItem('pref-lang');
+        var baseurl = '{{ "" | relative_url }}';
+        var pathname = window.location.pathname;
+
+        if (baseurl && pathname.indexOf(baseurl) === 0) {
+          pathname = pathname.slice(baseurl.length);
+        }
+        if (!pathname || pathname.charAt(0) !== '/') {
+          pathname = '/' + pathname;
+        }
+
+        var currentLang = 'zh-CN';
+        var canonicalPath = pathname;
+
+        if (pathname.indexOf('/en/') === 0 || pathname === '/en') {
+          currentLang = 'en';
+          canonicalPath = pathname.replace(/^\/en/, '') || '/';
+        } else if (pathname.indexOf('/ja/') === 0 || pathname === '/ja') {
+          currentLang = 'ja';
+          canonicalPath = pathname.replace(/^\/ja/, '') || '/';
+        }
+
+        if (canonicalPath === '/index.html') {
+          canonicalPath = '/';
+        }
+
+        var targetLang = userPref;
+        if (!targetLang) {
+          var navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+          if (navLang.indexOf('zh') === 0) {
+            targetLang = 'zh-CN';
+          } else if (navLang.indexOf('ja') === 0) {
+            targetLang = 'ja';
+          } else {
+            targetLang = 'en'; // English fallback for all other languages
           }
         }
-      } catch (e) {}
+
+        var redirectKey = 'auto-lang-redirected';
+        var alreadyRedirected = sessionStorage.getItem(redirectKey);
+
+        var isMatch = false;
+        if (targetLang === 'zh-CN' || targetLang === 'zh') {
+          isMatch = (currentLang === 'zh-CN');
+        } else {
+          isMatch = (currentLang === targetLang);
+        }
+
+        var isDetailArchive = (canonicalPath.indexOf('/tags/') === 0 && canonicalPath !== '/tags/') ||
+                              (canonicalPath.indexOf('/categories/') === 0 && canonicalPath !== '/categories/');
+
+        if (!isMatch && !alreadyRedirected && !isDetailArchive) {
+          sessionStorage.setItem(redirectKey, 'true');
+
+          var targetUrl = '';
+          if (targetLang === 'en') {
+            targetUrl = (canonicalPath === '/') ? (baseurl + '/en/') : (baseurl + '/en' + canonicalPath);
+          } else if (targetLang === 'ja') {
+            targetUrl = (canonicalPath === '/') ? (baseurl + '/ja/') : (baseurl + '/ja' + canonicalPath);
+          } else {
+            targetUrl = (canonicalPath === '/') ? (baseurl + '/') : (baseurl + canonicalPath);
+          }
+
+          targetUrl = targetUrl.replace(/\/+/g, '/');
+          var fullTarget = targetUrl + window.location.search + window.location.hash;
+          if (targetUrl !== window.location.pathname) {
+            window.location.replace(fullTarget);
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
     })();
   </script>
 

@@ -53,18 +53,38 @@
       </li>
       {% for tab in site.tabs %}
         {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
-        {% if tab_name contains 'about-' %}
-          {% continue %}
-        {% endif %}
-
         {% assign tab_href = tab.url %}
-        {% if tab_name == 'about' %}
+        {% if tab.url contains 'about' %}
           {% if include.lang == 'en' %}
             {% assign tab_href = '/en/about/' %}
           {% elsif include.lang == 'ja' %}
             {% assign tab_href = '/ja/about/' %}
           {% else %}
             {% assign tab_href = '/about/' %}
+          {% endif %}
+        {% elsif tab.url contains 'archives' %}
+          {% if include.lang == 'en' %}
+            {% assign tab_href = '/en/archives/' %}
+          {% elsif include.lang == 'ja' %}
+            {% assign tab_href = '/ja/archives/' %}
+          {% else %}
+            {% assign tab_href = '/archives/' %}
+          {% endif %}
+        {% elsif tab.url contains 'categories' %}
+          {% if include.lang == 'en' %}
+            {% assign tab_href = '/en/categories/' %}
+          {% elsif include.lang == 'ja' %}
+            {% assign tab_href = '/ja/categories/' %}
+          {% else %}
+            {% assign tab_href = '/categories/' %}
+          {% endif %}
+        {% elsif tab.url contains 'tags' %}
+          {% if include.lang == 'en' %}
+            {% assign tab_href = '/en/tags/' %}
+          {% elsif include.lang == 'ja' %}
+            {% assign tab_href = '/ja/tags/' %}
+          {% else %}
+            {% assign tab_href = '/tags/' %}
           {% endif %}
         {% endif %}
 

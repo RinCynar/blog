@@ -40,7 +40,8 @@
         if (!targetLang) return;
 
         try {
-          localStorage.setItem('pref-lang', targetLang.startsWith('zh') ? 'zh' : targetLang);
+          localStorage.setItem('pref-lang', targetLang.startsWith('zh') ? 'zh-CN' : targetLang);
+          sessionStorage.removeItem('auto-lang-redirected');
         } catch (e) {}
 
         const currentPath = window.location.pathname;
@@ -55,7 +56,12 @@
         }
 
         let targetUrl = canonicalPath;
-        if (targetLang === 'en') {
+        const isDetailArchive = (canonicalPath.startsWith('/tags/') && canonicalPath !== '/tags/') ||
+                                (canonicalPath.startsWith('/categories/') && canonicalPath !== '/categories/');
+
+        if (isDetailArchive) {
+          targetUrl = '{{ "" | relative_url }}' + canonicalPath;
+        } else if (targetLang === 'en') {
           targetUrl = canonicalPath === '/' ? '{{ "/en/" | relative_url }}' : ('{{ "/en" | relative_url }}' + canonicalPath);
         } else if (targetLang === 'ja') {
           targetUrl = canonicalPath === '/' ? '{{ "/ja/" | relative_url }}' : ('{{ "/ja" | relative_url }}' + canonicalPath);
@@ -63,7 +69,7 @@
           targetUrl = canonicalPath === '/' ? '{{ "/" | relative_url }}' : ('{{ "" | relative_url }}' + canonicalPath);
         }
 
-        targetUrl = targetUrl.replace(/\/+/g, '/');
+        targetUrl = targetUrl.replace(/\/+/g, '/') + window.location.search + window.location.hash;
         window.location.href = targetUrl;
       });
     });

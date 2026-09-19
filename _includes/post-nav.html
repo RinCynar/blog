@@ -4,13 +4,41 @@
   {% assign previous = site.data.locales[include.lang].post.button.previous %}
   {% assign next = site.data.locales[include.lang].post.button.next %}
 
-  {% if page.previous.url %}
+  {% assign cur_lang = page.lang | default: site.lang | default: 'zh-CN' %}
+  {% if cur_lang == 'en' %}
+    {% assign lang_posts = site.posts | where: 'lang', 'en' %}
+  {% elsif cur_lang == 'ja' %}
+    {% assign lang_posts = site.posts | where: 'lang', 'ja' %}
+  {% else %}
+    {% assign lang_posts = site.posts | where_exp: 'item', "item.lang == 'zh-CN' or item.lang == 'zh' or item.lang == nil" %}
+  {% endif %}
+
+  {% assign prev_post = nil %}
+  {% assign next_post = nil %}
+
+  {% for p in lang_posts %}
+    {% if p.url == page.url %}
+      {% assign cur_idx = forloop.index0 %}
+      {% assign prev_idx = cur_idx | plus: 1 %}
+      {% assign next_idx = cur_idx | minus: 1 %}
+
+      {% if prev_idx < lang_posts.size %}
+        {% assign prev_post = lang_posts[prev_idx] %}
+      {% endif %}
+      {% if next_idx >= 0 %}
+        {% assign next_post = lang_posts[next_idx] %}
+      {% endif %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% if prev_post %}
     <a
-      href="{{ site.baseurl }}{{ page.previous.url }}"
+      href="{{ prev_post.url | relative_url }}"
       class="md-btn"
       aria-label="{{ previous }}"
     >
-      <p>{{ page.previous.title }}</p>
+      <p>{{ prev_post.title }}</p>
     </a>
   {% else %}
     <div class="md-btn disabled" aria-label="{{ previous }}">
@@ -18,13 +46,13 @@
     </div>
   {% endif %}
 
-  {% if page.next.url %}
+  {% if next_post %}
     <a
-      href="{{ site.baseurl }}{{page.next.url}}"
+      href="{{ next_post.url | relative_url }}"
       class="md-btn"
       aria-label="{{ next }}"
     >
-      <p>{{ page.next.title }}</p>
+      <p>{{ next_post.title }}</p>
     </a>
   {% else %}
     <div class="md-btn disabled" aria-label="{{ next }}">

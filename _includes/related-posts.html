@@ -28,7 +28,9 @@
 {% for i in (0..last_index) %}
   {% assign post = match_posts[i] %}
 
-  {% if post.url == page.url %}
+  {% assign page_lang = page.lang | default: site.lang | default: 'zh-CN' %}
+  {% assign post_lang = post.lang | default: 'zh-CN' %}
+  {% if post.url == page.url or post_lang != page_lang %}
     {% continue %}
   {% endif %}
 

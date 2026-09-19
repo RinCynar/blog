@@ -8,8 +8,16 @@ layout: page
 {% assign df_strftime_m = site.data.locales[lang].df.archives.strftime | default: '/ %m' %}
 {% assign df_dayjs_m = site.data.locales[lang].df.archives.dayjs | default: '/ MM' %}
 
+{% if lang == 'en' %}
+  {% assign lang_posts = site.posts | where: 'lang', 'en' %}
+{% elsif lang == 'ja' %}
+  {% assign lang_posts = site.posts | where: 'lang', 'ja' %}
+{% else %}
+  {% assign lang_posts = site.posts | where_exp: 'item', "item.lang == 'zh-CN' or item.lang == 'zh' or item.lang == nil" %}
+{% endif %}
+
 <div id="archives">
-  {% for post in site.posts %}
+  {% for post in lang_posts %}
     {% assign cur_year = post.date | date: '%Y' %}
 
     {% if cur_year != last_year %}

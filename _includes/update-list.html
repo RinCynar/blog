@@ -4,14 +4,28 @@
 
 {% assign all_list = '' | split: '' %}
 
+{% assign cur_lang = include.lang | default: site.lang | default: 'zh-CN' %}
+
 {% for post in site.posts %}
-  {% assign datetime = post.last_modified_at | default: post.date %}
+  {% assign post_lang = post.lang | default: 'zh-CN' %}
+  {% assign is_match = false %}
+  {% if cur_lang == 'en' %}
+    {% if post_lang == 'en' %}{% assign is_match = true %}{% endif %}
+  {% elsif cur_lang == 'ja' %}
+    {% if post_lang == 'ja' %}{% assign is_match = true %}{% endif %}
+  {% else %}
+    {% if post_lang == 'zh-CN' or post_lang == 'zh' or post.lang == nil %}{% assign is_match = true %}{% endif %}
+  {% endif %}
 
-  {% capture elem %}
-    {{- datetime | date: "%Y%m%d%H%M%S" -}}::{{- forloop.index0 -}}
-  {% endcapture %}
+  {% if is_match %}
+    {% assign datetime = post.last_modified_at | default: post.date %}
 
-  {% assign all_list = all_list | push: elem %}
+    {% capture elem %}
+      {{- datetime | date: "%Y%m%d%H%M%S" -}}::{{- forloop.index0 -}}
+    {% endcapture %}
+
+    {% assign all_list = all_list | push: elem %}
+  {% endif %}
 {% endfor %}
 
 {% assign all_list = all_list | sort | reverse %}
@@ -24,7 +38,7 @@
 
 {% if update_list.size > 0 %}
   <section id="access-lastmod">
-    <h2 class="panel-heading">{{- site.data.locales[include.lang].panel.lastmod -}}</h2>
+    <h2 class="panel-heading">{{- site.data.locales[cur_lang].panel.lastmod -}}</h2>
     <ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
       {% for item in update_list %}
         {% assign index = item | split: '::' | last | plus: 0 %}

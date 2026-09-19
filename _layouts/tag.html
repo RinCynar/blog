@@ -6,18 +6,77 @@ layout: page
 {% include lang.html %}
 
 <div id="page-tag">
-  <h1>
-    <i class="fa fa-tag fa-fw" aria-hidden="true"></i>
-    {{ page.title }}
-    <span class="lead">{{ page.posts | size }}</span>
-  </h1>
-  <ul class="content">
+  <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+    <h1 class="mb-0">
+      <i class="fa fa-tag fa-fw" aria-hidden="true"></i>
+      {{ page.title }}
+      <span class="lead" id="tag-post-count">{{ page.posts | size }}</span>
+    </h1>
+    <div class="btn-group btn-group-sm md-lang-filter-group" role="group" id="tag-lang-filter" aria-label="Filter posts by language">
+      <button type="button" class="btn btn-outline-primary" data-filter="all">All</button>
+      <button type="button" class="btn btn-outline-primary" data-filter="zh-CN">中文</button>
+      <button type="button" class="btn btn-outline-primary" data-filter="en">English</button>
+      <button type="button" class="btn btn-outline-primary" data-filter="ja">日本語</button>
+    </div>
+  </div>
+
+  <ul class="content list-unstyled" id="tag-post-list">
     {% for post in page.posts %}
-      <li>
+      {% assign p_lang = post.lang | default: 'zh-CN' %}
+      <li class="tag-post-item" data-lang="{{ p_lang }}">
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         <span class="dash flex-grow-1"></span>
-        {% include datetime.html date=post.date class='text-muted small text-nowrap' lang=lang %}
+        {% include datetime.html date=post.date class='text-muted small text-nowrap' lang=p_lang %}
       </li>
     {% endfor %}
   </ul>
 </div>
+
+<script>
+  (function () {
+    var userPref = localStorage.getItem('pref-lang');
+    if (!userPref) {
+      var navLang = (navigator.language || '').toLowerCase();
+      userPref = navLang.startsWith('zh') ? 'zh-CN' : (navLang.startsWith('ja') ? 'ja' : 'en');
+    }
+
+    var filterBtns = document.querySelectorAll('#tag-lang-filter [data-filter]');
+    var postItems = document.querySelectorAll('.tag-post-item');
+    var countEl = document.getElementById('tag-post-count');
+
+    function applyFilter(targetLang) {
+      var visibleCount = 0;
+      postItems.forEach(function (el) {
+        var itemLang = el.getAttribute('data-lang');
+        var show = (targetLang === 'all') || (itemLang === targetLang) || (targetLang === 'zh-CN' && (itemLang === 'zh' || !itemLang));
+        el.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+      if (countEl) countEl.textContent = visibleCount;
+
+      filterBtns.forEach(function (btn) {
+        if (btn.getAttribute('data-filter') === targetLang) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+    }
+
+    var hasMatch = false;
+    postItems.forEach(function (el) {
+      var itemLang = el.getAttribute('data-lang');
+      if (itemLang === userPref || (userPref === 'zh-CN' && (itemLang === 'zh' || !itemLang))) {
+        hasMatch = true;
+      }
+    });
+
+    applyFilter(hasMatch ? userPref : 'all');
+
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        applyFilter(btn.getAttribute('data-filter'));
+      });
+    });
+  })();
+</script>

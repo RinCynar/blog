@@ -1,7 +1,7 @@
 ---
-# the default layout is 'page'
+layout: page
+title: について
 icon: fas fa-info-circle
-order: 6
 lang: ja
 permalink: /ja/about/
 ---
