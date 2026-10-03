@@ -2,7 +2,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
   <!-- Material You Language Auto Detection & Routing (Posts & Site-Wide) -->
-  <script>
+  <script data-cfasync="false">
     (function () {
       try {
         var userPref = localStorage.getItem('pref-lang');
@@ -46,7 +46,7 @@
           } else if (primaryLang.indexOf('ja') === 0) {
             targetLang = 'ja';
           } else {
-            targetLang = 'en'; // English fallback & default
+            targetLang = 'en';
           }
         }
 
@@ -72,7 +72,6 @@
           } else if (targetLang === 'ja') {
             targetUrl = (canonicalPath === '/') ? (baseurl + '/ja/') : (baseurl + '/ja' + canonicalPath);
           } else {
-            // English: root without prefix
             targetUrl = (canonicalPath === '/') ? (baseurl + '/') : (baseurl + canonicalPath);
           }
 

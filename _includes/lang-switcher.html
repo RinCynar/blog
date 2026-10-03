@@ -1,5 +1,5 @@
 <!-- Material You Language Switcher Interaction -->
-<script>
+<script data-cfasync="false">
   (function () {
     const langToggle = document.getElementById('lang-toggle');
     const langMenu = document.getElementById('lang-menu');
@@ -81,7 +81,6 @@
         } else if (targetLang === 'ja') {
           targetUrl = canonicalPath === '/' ? (baseurl + '/ja/') : (baseurl + '/ja' + canonicalPath);
         } else {
-          // English fallback / default: Root URL without prefix
           targetUrl = canonicalPath === '/' ? (baseurl + '/') : (baseurl + canonicalPath);
         }
 
