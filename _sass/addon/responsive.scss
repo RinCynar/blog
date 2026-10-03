@@ -252,6 +252,13 @@ $sidebar-display: 'sidebar-display';
     .sidebar-bottom {
       flex-direction: column;
       padding: 0 0 1rem;
+
+      .md-lang-menu {
+        left: calc(100% + 8px);
+        bottom: 0;
+        transform: none;
+        animation: md-menu-fade-in-rail var(--md-duration-short) var(--md-easing-emphasized);
+      }
     }
   }
 

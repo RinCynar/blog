@@ -6,8 +6,9 @@
     if (!langToggle || !langMenu) return;
 
     function toggleMenu(show) {
-      const isExpanded = show !== undefined ? show : langMenu.hasAttribute('hidden');
-      if (isExpanded) {
+      const isHidden = langMenu.hasAttribute('hidden');
+      const willOpen = (typeof show === 'boolean') ? show : isHidden;
+      if (willOpen) {
         langMenu.removeAttribute('hidden');
         langToggle.setAttribute('aria-expanded', 'true');
       } else {
@@ -17,12 +18,13 @@
     }
 
     langToggle.addEventListener('click', function (e) {
+      e.preventDefault();
       e.stopPropagation();
       toggleMenu();
     });
 
     document.addEventListener('click', function (e) {
-      if (!langMenu.contains(e.target) && e.target !== langToggle && !langToggle.contains(e.target)) {
+      if (!langMenu.contains(e.target) && !langToggle.contains(e.target)) {
         toggleMenu(false);
       }
     });
@@ -35,16 +37,26 @@
 
     const items = langMenu.querySelectorAll('.md-lang-item');
     items.forEach(function (btn) {
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         const targetLang = btn.getAttribute('data-lang');
         if (!targetLang) return;
 
         try {
           localStorage.setItem('pref-lang', targetLang.startsWith('zh') ? 'zh-CN' : targetLang);
           sessionStorage.removeItem('auto-lang-redirected');
-        } catch (e) {}
+        } catch (err) {}
 
-        const currentPath = window.location.pathname;
+        const baseurl = '{{ "" | relative_url }}';
+        let currentPath = window.location.pathname;
+        if (baseurl && currentPath.indexOf(baseurl) === 0) {
+          currentPath = currentPath.slice(baseurl.length);
+        }
+        if (!currentPath || currentPath.charAt(0) !== '/') {
+          currentPath = '/' + currentPath;
+        }
+
         const isZh = currentPath.startsWith('/zh/') || currentPath === '/zh';
         const isJa = currentPath.startsWith('/ja/') || currentPath === '/ja';
 
@@ -58,23 +70,27 @@
           canonicalPath = '/';
         }
 
-        let targetUrl = canonicalPath;
+        let targetUrl = '';
         const isDetailArchive = (canonicalPath.startsWith('/tags/') && canonicalPath !== '/tags/') ||
                                 (canonicalPath.startsWith('/categories/') && canonicalPath !== '/categories/');
 
         if (isDetailArchive) {
-          targetUrl = '{{ "" | relative_url }}' + canonicalPath;
+          targetUrl = baseurl + canonicalPath;
         } else if (targetLang === 'zh-CN' || targetLang === 'zh') {
-          targetUrl = canonicalPath === '/' ? '{{ "/zh/" | relative_url }}' : ('{{ "/zh" | relative_url }}' + canonicalPath);
+          targetUrl = canonicalPath === '/' ? (baseurl + '/zh/') : (baseurl + '/zh' + canonicalPath);
         } else if (targetLang === 'ja') {
-          targetUrl = canonicalPath === '/' ? '{{ "/ja/" | relative_url }}' : ('{{ "/ja" | relative_url }}' + canonicalPath);
+          targetUrl = canonicalPath === '/' ? (baseurl + '/ja/') : (baseurl + '/ja' + canonicalPath);
         } else {
           // English fallback / default: Root URL without prefix
-          targetUrl = canonicalPath === '/' ? '{{ "/" | relative_url }}' : ('{{ "" | relative_url }}' + canonicalPath);
+          targetUrl = canonicalPath === '/' ? (baseurl + '/') : (baseurl + canonicalPath);
         }
 
         targetUrl = targetUrl.replace(/\/+/g, '/') + window.location.search + window.location.hash;
-        window.location.href = targetUrl;
+        if (targetUrl === window.location.pathname + window.location.search + window.location.hash) {
+          toggleMenu(false);
+        } else {
+          window.location.href = targetUrl;
+        }
       });
     });
   })();

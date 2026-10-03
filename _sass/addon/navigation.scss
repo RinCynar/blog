@@ -14,10 +14,21 @@ $sidebar-display: 'sidebar-display';
   width: var(--md-drawer-width);
   height: 100%;
   padding: 0;
-  overflow: hidden auto;
+  overflow: visible;
   background: var(--md-surface-container);
   border-right: 0;
   color: var(--md-on-surface);
+
+  nav.md-nav {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -305,6 +316,17 @@ $sidebar-display: 'sidebar-display';
   to {
     opacity: 1;
     transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes md-menu-fade-in-rail {
+  from {
+    opacity: 0;
+    transform: translateX(-6px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
   }
 }
 
