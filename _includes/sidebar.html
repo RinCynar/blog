@@ -14,8 +14,8 @@
     <i class="fas fa-times" aria-hidden="true"></i>
   </button>
 
-  {% if include.lang == 'en' %}
-    {% assign home_url = '/en/' %}
+  {% if include.lang == 'zh-CN' or include.lang == 'zh' %}
+    {% assign home_url = '/zh/' %}
   {% elsif include.lang == 'ja' %}
     {% assign home_url = '/ja/' %}
   {% else %}
@@ -55,32 +55,32 @@
         {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
         {% assign tab_href = tab.url %}
         {% if tab.url contains 'about' %}
-          {% if include.lang == 'en' %}
-            {% assign tab_href = '/en/about/' %}
+          {% if include.lang == 'zh-CN' or include.lang == 'zh' %}
+            {% assign tab_href = '/zh/about/' %}
           {% elsif include.lang == 'ja' %}
             {% assign tab_href = '/ja/about/' %}
           {% else %}
             {% assign tab_href = '/about/' %}
           {% endif %}
         {% elsif tab.url contains 'archives' %}
-          {% if include.lang == 'en' %}
-            {% assign tab_href = '/en/archives/' %}
+          {% if include.lang == 'zh-CN' or include.lang == 'zh' %}
+            {% assign tab_href = '/zh/archives/' %}
           {% elsif include.lang == 'ja' %}
             {% assign tab_href = '/ja/archives/' %}
           {% else %}
             {% assign tab_href = '/archives/' %}
           {% endif %}
         {% elsif tab.url contains 'categories' %}
-          {% if include.lang == 'en' %}
-            {% assign tab_href = '/en/categories/' %}
+          {% if include.lang == 'zh-CN' or include.lang == 'zh' %}
+            {% assign tab_href = '/zh/categories/' %}
           {% elsif include.lang == 'ja' %}
             {% assign tab_href = '/ja/categories/' %}
           {% else %}
             {% assign tab_href = '/categories/' %}
           {% endif %}
         {% elsif tab.url contains 'tags' %}
-          {% if include.lang == 'en' %}
-            {% assign tab_href = '/en/tags/' %}
+          {% if include.lang == 'zh-CN' or include.lang == 'zh' %}
+            {% assign tab_href = '/zh/tags/' %}
           {% elsif include.lang == 'ja' %}
             {% assign tab_href = '/ja/tags/' %}
           {% else %}

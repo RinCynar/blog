@@ -16,12 +16,12 @@
           pathname = '/' + pathname;
         }
 
-        var currentLang = 'zh-CN';
+        var currentLang = 'en';
         var canonicalPath = pathname;
 
-        if (pathname.indexOf('/en/') === 0 || pathname === '/en') {
-          currentLang = 'en';
-          canonicalPath = pathname.replace(/^\/en/, '') || '/';
+        if (pathname.indexOf('/zh/') === 0 || pathname === '/zh') {
+          currentLang = 'zh-CN';
+          canonicalPath = pathname.replace(/^\/zh/, '') || '/';
         } else if (pathname.indexOf('/ja/') === 0 || pathname === '/ja') {
           currentLang = 'ja';
           canonicalPath = pathname.replace(/^\/ja/, '') || '/';
@@ -33,13 +33,20 @@
 
         var targetLang = userPref;
         if (!targetLang) {
-          var navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-          if (navLang.indexOf('zh') === 0) {
+          var primaryLang = '';
+          if (navigator.languages && navigator.languages.length) {
+            primaryLang = navigator.languages[0];
+          } else {
+            primaryLang = navigator.language || navigator.userLanguage || '';
+          }
+          primaryLang = (primaryLang || '').toLowerCase();
+
+          if (primaryLang.indexOf('zh') === 0) {
             targetLang = 'zh-CN';
-          } else if (navLang.indexOf('ja') === 0) {
+          } else if (primaryLang.indexOf('ja') === 0) {
             targetLang = 'ja';
           } else {
-            targetLang = 'en'; // English fallback for all other languages
+            targetLang = 'en'; // English fallback & default
           }
         }
 
@@ -60,11 +67,12 @@
           sessionStorage.setItem(redirectKey, 'true');
 
           var targetUrl = '';
-          if (targetLang === 'en') {
-            targetUrl = (canonicalPath === '/') ? (baseurl + '/en/') : (baseurl + '/en' + canonicalPath);
+          if (targetLang === 'zh-CN' || targetLang === 'zh') {
+            targetUrl = (canonicalPath === '/') ? (baseurl + '/zh/') : (baseurl + '/zh' + canonicalPath);
           } else if (targetLang === 'ja') {
             targetUrl = (canonicalPath === '/') ? (baseurl + '/ja/') : (baseurl + '/ja' + canonicalPath);
           } else {
+            // English: root without prefix
             targetUrl = (canonicalPath === '/') ? (baseurl + '/') : (baseurl + canonicalPath);
           }
 

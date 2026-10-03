@@ -2,7 +2,7 @@
 layout: archives
 icon: fas fa-archive
 order: 5
-title: Archives
-lang: en
-permalink: /archives/
+title: 归档
+lang: zh-CN
+permalink: /zh/archives/
 ---

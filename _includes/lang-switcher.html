@@ -45,14 +45,17 @@
         } catch (e) {}
 
         const currentPath = window.location.pathname;
-        const isEn = currentPath.startsWith('/en/') || currentPath === '/en';
+        const isZh = currentPath.startsWith('/zh/') || currentPath === '/zh';
         const isJa = currentPath.startsWith('/ja/') || currentPath === '/ja';
 
         let canonicalPath = currentPath;
-        if (isEn) {
-          canonicalPath = currentPath.replace(/^\/en/, '') || '/';
+        if (isZh) {
+          canonicalPath = currentPath.replace(/^\/zh/, '') || '/';
         } else if (isJa) {
           canonicalPath = currentPath.replace(/^\/ja/, '') || '/';
+        }
+        if (canonicalPath === '/index.html') {
+          canonicalPath = '/';
         }
 
         let targetUrl = canonicalPath;
@@ -61,11 +64,12 @@
 
         if (isDetailArchive) {
           targetUrl = '{{ "" | relative_url }}' + canonicalPath;
-        } else if (targetLang === 'en') {
-          targetUrl = canonicalPath === '/' ? '{{ "/en/" | relative_url }}' : ('{{ "/en" | relative_url }}' + canonicalPath);
+        } else if (targetLang === 'zh-CN' || targetLang === 'zh') {
+          targetUrl = canonicalPath === '/' ? '{{ "/zh/" | relative_url }}' : ('{{ "/zh" | relative_url }}' + canonicalPath);
         } else if (targetLang === 'ja') {
           targetUrl = canonicalPath === '/' ? '{{ "/ja/" | relative_url }}' : ('{{ "/ja" | relative_url }}' + canonicalPath);
         } else {
+          // English fallback / default: Root URL without prefix
           targetUrl = canonicalPath === '/' ? '{{ "/" | relative_url }}' : ('{{ "" | relative_url }}' + canonicalPath);
         }
 

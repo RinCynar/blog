@@ -19,8 +19,8 @@
     <nav id="breadcrumb" aria-label="Breadcrumb">
       {% assign paths = page.url | split: '/' %}
 
-      {% if include.lang == 'en' %}
-        {% assign home_url = '/en/' %}
+      {% if include.lang == 'zh-CN' or include.lang == 'zh' %}
+        {% assign home_url = '/zh/' %}
       {% elsif include.lang == 'ja' %}
         {% assign home_url = '/ja/' %}
       {% else %}

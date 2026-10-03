@@ -2,7 +2,7 @@
 layout: tags
 icon: fas fa-tags
 order: 2
-title: Tags
-lang: en
-permalink: /tags/
+title: 标签
+lang: zh-CN
+permalink: /zh/tags/
 ---
